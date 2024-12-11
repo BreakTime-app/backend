@@ -6,25 +6,29 @@ const router = express.Router();
 
 // 사용자 등록
 router.post("/register", async (req, res) => {
-  const { username, userid, password, birthday } = req.body;  // username도 받아야 함
+  const { username, userid, password, birthday, profileImage } = req.body;
 
   try {
-    // 사용자 ID 중복 체크
     const userExists = await User.findOne({ userid });
     if (userExists) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // 새 사용자 생성
-    const user = new User({ username, userid, password, birthday });
+    const user = new User({
+      username,
+      userid,
+      password,
+      birthday,
+      profileImage: profileImage || "https://example.com/default-profile.jpg", // 기본값 설정
+    });
+
     await user.save();
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
-    console.error("Error registering user:", error);  // 디버깅용 로그 추가
+    console.error(error);
     res.status(500).json({ message: "Server error" });
   }
 });
-
 
 // 사용자 로그인
 router.post("/login", async (req, res) => {
