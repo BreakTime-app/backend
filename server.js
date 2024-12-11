@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const connectDB = require("./config/db");
 const scheduleRoutes = require("./routes/scheduleRoutes");
 const loginRoutes = require("./routes/login"); // 로그인 라우터 파일 이름 변경
+const updateProfileRoutes = require("./routes/updateProfile");
 
 const app = express();
 
@@ -30,10 +31,7 @@ app.use((req, res, next) => {
 // 라우팅 설정
 app.use("/api/schedules", scheduleRoutes); // 공강 시간표 API
 app.use("/api/auth", loginRoutes); // 로그인 및 회원가입 라우트
-app.use((err, req, res, next) => {
-  console.error(err.stack); // 에러 스택을 콘솔에 출력
-  res.status(500).json({ message: "Server error", error: err.message }); // 클라이언트에게 에러 메시지 전송
-});
+app.use("/api/profile", updateProfileRoutes); // 프로필 업데이트 라우트 추가
 
 // 서버 포트 설정
 const PORT = process.env.PORT || 5000;
