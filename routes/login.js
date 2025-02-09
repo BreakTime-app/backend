@@ -4,6 +4,42 @@ const User = require("../models/User");
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * /api/login/register:
+ *   post:
+ *     summary: 사용자 등록
+ *     description: 새로운 사용자를 등록합니다.
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               userid:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               birthday:
+ *                 type: string
+ *                 format: date
+ *               profileImage:
+ *                 type: string
+ *                 description: 프로필 이미지 URL
+ *     responses:
+ *       201:
+ *         description: 회원가입 성공
+ *       400:
+ *         description: 이미 존재하는 사용자
+ *       500:
+ *         description: 서버 에러
+ */
+
+
 // 사용자 등록
 router.post("/register", async (req, res) => {
   const { username, userid, password, birthday, profileImage } = req.body;

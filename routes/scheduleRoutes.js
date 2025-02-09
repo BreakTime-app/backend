@@ -2,6 +2,38 @@ const express = require("express");
 const Schedule = require("../models/Schedule");
 const router = express.Router();
 
+/**
+ * @swagger
+ * /api/schedules/add:
+ *   post:
+ *     summary: 사용자 시간표 추가
+ *     description: 사용자의 시간표에 새로운 수업을 추가하거나 새로 생성합니다.
+ *     tags: [Schedules]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user:
+ *                 type: string
+ *                 description: 사용자 ID
+ *               classes:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                 description: 추가할 수업 목록
+ *     responses:
+ *       200:
+ *         description: 기존 시간표에 수업이 추가됨
+ *       201:
+ *         description: 새 시간표가 생성됨
+ *       500:
+ *         description: 서버 에러
+ */
+
+
 // 사용자 시간표 추가
 router.post("/add", async (req, res) => {
   try {
