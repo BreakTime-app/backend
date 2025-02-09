@@ -25,7 +25,7 @@ const swaggerOptions = {
   swaggerDefinition: {
     openapi: "3.0.0",
     info: {
-      title: "공강 관리 API",
+      title: "브레이크타임 API",
       description: "공강 시간표 공유 앱의 API 문서",
       version: "1.0.0",
     },
@@ -40,7 +40,7 @@ const swaggerOptions = {
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocs)); // 여기 변경됨!
 
 // API 키 인증 미들웨어
 app.use((req, res, next) => {
@@ -63,5 +63,5 @@ app.use("/api/updateProfile", updateProfileRoutes);
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-  console.log(`Swagger docs available at http://localhost:${PORT}/api-docs`);
+  console.log(`Swagger docs available at http://localhost:${PORT}/swagger`); // 여기 변경됨!
 });
