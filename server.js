@@ -4,6 +4,8 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const connectDB = require("./config/db");
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 
 const scheduleRoutes = require("./routes/scheduleRoutes"); // 사용자 시간표 API
 const groupRoutes = require("./routes/groupRoutes"); // 그룹 API 추가
@@ -18,6 +20,28 @@ connectDB();
 // JSON 데이터 파싱
 app.use(express.json());
 
+// Swagger 설정
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: "3.0.0",
+    info: {
+      title: "브레이크타임 API",
+      description: "공강 시간표 공유 앱의 API 문서",
+      version: "1.0.0",
+    },
+    servers: [
+      {
+        url: "http://localhost:5000",
+        description: "로컬 서버",
+      },
+    ],
+  },
+  apis: ["./routes/*.js"], // Swagger 주석이 있는 라우트 파일들
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocs)); // 여기 변경됨!
+
 // API 키 인증 미들웨어
 app.use((req, res, next) => {
   const clientApiKey = req.headers["x-api-key"];
@@ -31,12 +55,13 @@ app.use((req, res, next) => {
 
 // 라우트 설정
 app.use("/api/schedules", scheduleRoutes);
-app.use("/api/groups", groupRoutes);  // 그룹 라우트 추가
-app.use("/api/login", loginRoutes);  // 로그인 라우트 추가
-app.use("/api/updateProfile", updateProfileRoutes);  // 프로필 업데이트 라우트 추가
+app.use("/api/groups", groupRoutes);
+app.use("/api/login", loginRoutes);
+app.use("/api/updateProfile", updateProfileRoutes);
 
 // 서버 시작
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+  console.log(`Swagger docs available at http://localhost:${PORT}/swagger`); // 여기 변경됨!
 });

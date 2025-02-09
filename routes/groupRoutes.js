@@ -4,6 +4,35 @@ const Group = require("../models/Group");
 const User = require("../models/User");
 const router = express.Router();
 
+/**
+ * @swagger
+ * /api/groups/create:
+ *   post:
+ *     summary: 그룹 생성
+ *     description: 새로운 그룹을 생성합니다.
+ *     tags: [Groups]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               groupName:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               adminId:
+ *                 type: string
+ *                 description: 그룹 관리자 ID
+ *     responses:
+ *       201:
+ *         description: 그룹 생성 성공
+ *       500:
+ *         description: 서버 에러
+ */
+
+
 // 그룹 생성
 router.post("/create", async (req, res) => {
   try {
