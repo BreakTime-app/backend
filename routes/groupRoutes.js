@@ -32,6 +32,108 @@ const router = express.Router();
  *         description: 서버 에러
  */
 
+/**
+ * @swagger
+ * /api/groups/{groupId}/invite:
+ *   post:
+ *     summary: 그룹원 초대
+ *     description: 그룹에 새로운 사용자를 초대합니다. 초대는 관리자만 할 수 있습니다.
+ *     tags: [Groups]
+ *     parameters:
+ *       - in: path
+ *         name: groupId
+ *         required: true
+ *         description: 그룹 ID
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userid:
+ *                 type: string
+ *                 description: 초대할 사용자 ID
+ *               adminId:
+ *                 type: string
+ *                 description: 그룹 관리자 ID
+ *     responses:
+ *       200:
+ *         description: 그룹원 초대 성공
+ *       403:
+ *         description: 관리자만 초대할 수 있습니다
+ *       404:
+ *         description: 그룹 또는 사용자를 찾을 수 없음
+ *       500:
+ *         description: 서버 에러
+ */
+
+/**
+ * @swagger
+ * /api/groups/{groupId}/remove:
+ *   delete:
+ *     summary: 그룹원 추방
+ *     description: 그룹에서 사용자를 추방합니다. 추방은 관리자만 할 수 있습니다.
+ *     tags: [Groups]
+ *     parameters:
+ *       - in: path
+ *         name: groupId
+ *         required: true
+ *         description: 그룹 ID
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userid:
+ *                 type: string
+ *                 description: 추방할 사용자 ID
+ *               adminId:
+ *                 type: string
+ *                 description: 그룹 관리자 ID
+ *     responses:
+ *       200:
+ *         description: 그룹원 추방 성공
+ *       403:
+ *         description: 관리자만 추방할 수 있습니다
+ *       404:
+ *         description: 그룹 또는 사용자를 찾을 수 없음
+ *       500:
+ *         description: 서버 에러
+ */
+
+/**
+ * @swagger
+ * /api/groups/{groupId}:
+ *   get:
+ *     summary: 그룹 조회
+ *     description: 특정 그룹의 정보를 조회합니다.
+ *     tags: [Groups]
+ *     parameters:
+ *       - in: path
+ *         name: groupId
+ *         required: true
+ *         description: 그룹 ID
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: 그룹 정보 조회 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *       404:
+ *         description: 그룹을 찾을 수 없음
+ *       500:
+ *         description: 서버 에러
+ */
 
 // 그룹 생성
 router.post("/create", async (req, res) => {

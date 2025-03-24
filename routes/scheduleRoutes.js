@@ -33,6 +33,102 @@ const router = express.Router();
  *         description: 서버 에러
  */
 
+/**
+ * @swagger
+ * /api/schedules/{userId}:
+ *   get:
+ *     summary: 사용자 시간표 조회
+ *     description: 특정 사용자의 시간표를 조회합니다.
+ *     tags: [Schedules]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         description: 사용자 ID
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: 사용자 시간표 조회 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *       404:
+ *         description: 시간표를 찾을 수 없음
+ *       500:
+ *         description: 서버 에러
+ */
+
+/**
+ * @swagger
+ * /api/schedules/{userId}/class/{classId}:
+ *   put:
+ *     summary: 사용자 시간표에서 수업 수정
+ *     description: 사용자의 시간표에서 특정 수업을 수정합니다.
+ *     tags: [Schedules]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         description: 사용자 ID
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: classId
+ *         required: true
+ *         description: 수정할 수업 ID
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               className:
+ *                 type: string
+ *               classTime:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: 수업이 수정됨
+ *       404:
+ *         description: 시간표 또는 수업을 찾을 수 없음
+ *       500:
+ *         description: 서버 에러
+ */
+
+/**
+ * @swagger
+ * /api/schedules/{userId}/class/{classId}:
+ *   delete:
+ *     summary: 사용자 시간표에서 수업 삭제
+ *     description: 사용자의 시간표에서 특정 수업을 삭제합니다.
+ *     tags: [Schedules]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         description: 사용자 ID
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: classId
+ *         required: true
+ *         description: 삭제할 수업 ID
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: 수업이 삭제됨
+ *       404:
+ *         description: 시간표 또는 수업을 찾을 수 없음
+ *       500:
+ *         description: 서버 에러
+ */
+
 
 // 사용자 시간표 추가
 router.post("/add", async (req, res) => {
